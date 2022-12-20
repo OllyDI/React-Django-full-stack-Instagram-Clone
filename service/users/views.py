@@ -15,7 +15,6 @@ from users.models import User
 from users.serializers import UserSerializer
 
 class AuthViewSet(ModelViewSet): 
-    # queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [ AllowAny ]
     authentication_classes = []

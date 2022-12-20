@@ -20,6 +20,7 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 # Create your models here.
 class User(AbstractUser): 
     # 만료시간 5분
