@@ -1,11 +1,12 @@
 // React modules
+import { useState } from 'react';
 import { useForm, RegisterOptions } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 // External modules
 // 비동기 요청을 위한 모듈
 import axios from 'axios';
-
+ 
 const SignupForm = () => {
     const emailOpts: RegisterOptions = {
         required: true,
@@ -20,6 +21,7 @@ const SignupForm = () => {
         minLength: 6
     }
     
+    const [ errorMsg, setErrorMsg ] = useState("");
     // 검증 후 isValid 값 변경
     const { register, handleSubmit, formState: { isValid } } = useForm( { mode: 'onChange' } );
     const nav = useNavigate();
@@ -34,6 +36,12 @@ const SignupForm = () => {
             })
             .catch((error)=>{
                 console.log(error);
+                let errorArray: string[] = [];
+                Object.keys(error.response.data).map((key) => {
+                    errorArray = [...errorArray.concat(error.response.data[key])];
+                    return null;
+                })
+                setErrorMsg(errorArray.join(" "));
             })
         // 비동기 요청 처리를 위해 핸들러사용 -> then, catch
     }
@@ -50,7 +58,7 @@ const SignupForm = () => {
             <input className="form-input" type="text" {...register("username", usernameOpts)} placeholder="사용자이름"/>
             <input className="form-input" type="password" {...register("password", passwordOpts)} placeholder="비밀번호"/>
             <button className="form-btn form-btn-blue" type="submit" disabled={!isValid}>가입</button>
-            
+            { errorMsg !=="" && <div className='form-error'>{errorMsg}</div> }
         </form>
     )
 }

@@ -109,3 +109,13 @@ img.form-logo {
 .form-btn:focus {
   outline: none;
 }
+
+.form-error {
+  width: 270px;
+  height: 40px;
+  margin: 13px auto;
+  padding: 0 10px;
+  display: block;
+  color: red;
+  font-size: 14px;
+}

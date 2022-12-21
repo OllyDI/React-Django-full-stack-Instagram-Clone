@@ -22,7 +22,15 @@ class AuthViewSet(ModelViewSet):
     def signup(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid()
-        user = serializer.save()
+        try: 
+            user = serializer.save()
+        except Exception as e:
+            return Response(
+                {
+                    "message": str(e)
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
         login(request, user)
         
         return Response(
