@@ -39,6 +39,18 @@ code {
   border: 1px solid #DBDBDB;
 }
 
+.signin-form {
+  width: 350px;
+  height: 390px;
+  display: flex;
+  margin: 75px, auto;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  background-color: #fff;
+  border: 1px solid #DBDBDB;
+}
+
 img.form-logo {
   align-self: center;
   width: 175px;
@@ -118,4 +130,44 @@ img.form-logo {
   display: block;
   color: red;
   font-size: 14px;
+}
+
+.password-link {
+  cursor: default;
+  align-self: center;
+}
+
+.noline-link- {
+  text-decoration: none;
+}
+
+.password-link-text {
+  color : #00366B;
+  align-self: center;
+  font-size: 14px;
+  margin-top: 70px;
+}
+
+.password-link-text:hover {
+  cursor: pointer;
+}
+
+.signup-link { 
+  color : #00366B;
+  align-self: center;
+}
+
+.signin-link { 
+  color : #00366B;
+  align-self: center;
+}
+
+.center-item {
+  width: 350px;
+  height: 75px;
+  padding: 25px;
+  margin: 25px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #DBDBDB;
 }

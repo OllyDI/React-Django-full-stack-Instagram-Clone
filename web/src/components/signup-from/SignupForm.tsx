@@ -1,7 +1,7 @@
 // React modules
 import { useState } from 'react';
 import { useForm, RegisterOptions } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 // External modules
 // 비동기 요청을 위한 모듈
@@ -10,7 +10,7 @@ import axios from 'axios';
 const SignupForm = () => {
     const emailOpts: RegisterOptions = {
         required: true,
-        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+        pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
     }
     const usernameOpts: RegisterOptions = {
         required: true,
@@ -22,7 +22,9 @@ const SignupForm = () => {
     }
     
     const [ errorMsg, setErrorMsg ] = useState("");
+
     // 검증 후 isValid 값 변경
+    // handleSubmit(성공, 실패) : 요청을 보내기위해 사용, 모든 옵션 만족시 성공 실행, 불만족시 실패 실행
     const { register, handleSubmit, formState: { isValid } } = useForm( { mode: 'onChange' } );
     const nav = useNavigate();
 

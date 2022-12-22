@@ -147,9 +147,12 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:9998',
-    'http://localhost:3001'
+    'http://localhost:3001', 
+    'http://127.0.0.1:9998', 
+    'http://127.0.0.1:3001', 
 ]
 COR_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:9998'
+    'http://localhost:9998',
+    'http://127.0.0.1:9998'
 ]
