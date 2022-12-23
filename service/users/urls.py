@@ -18,7 +18,7 @@ authcode = AuthViewSet.as_view({
 })
 
 password = AuthViewSet.as_view({
-    'post': 'change_lostpassword'
+    'put': 'change_lostpassword'
 })
 
 urlpatterns = [

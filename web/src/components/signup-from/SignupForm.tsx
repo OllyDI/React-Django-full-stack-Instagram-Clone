@@ -30,7 +30,7 @@ const SignupForm = () => {
 
     const submit = (data: any) => {
         console.log(data);
-        axios.post('http://localhost:9998/users/signup', data)
+        axios.post('/users/signup', data)
             .then((resp)=>{
                 console.log(resp);
                 localStorage.setItem("userId", resp.data.pk);

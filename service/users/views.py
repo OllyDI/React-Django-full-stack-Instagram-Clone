@@ -87,7 +87,7 @@ class AuthViewSet(ModelViewSet):
 
     def check_authcode(self, request):
         # 이메일 확인
-        email = request.data.get['email', None]
+        email = request.data.get('email', None)
         if email is None:
             return Response(
                 {
@@ -109,7 +109,7 @@ class AuthViewSet(ModelViewSet):
 
 
         # 해당 이메일 사용자 객체 가져오기
-        try: user = User.objects.get(emial=email)
+        try: user = User.objects.get(email=email)
         except User.DoesNotExist:
             return Response(
                 {
@@ -131,7 +131,12 @@ class AuthViewSet(ModelViewSet):
         
 
         if result:
-            return Response( status = status.HTTP_200_OK )
+            return Response( 
+                    {
+                        "message": "일치합니다."
+                    },
+                    status = status.HTTP_200_OK 
+                )
         else: 
             return Response(
                 {
@@ -142,8 +147,8 @@ class AuthViewSet(ModelViewSet):
 
     def change_lostpassword(self, request):
         # 이메일 확인
-        email = request.data.get['email', None]
-        if email is not None:
+        email = request.data.get('email', None)
+        if email is None:
             return Response(
                 {
                     "message": "이메일이 없습니다."
@@ -153,7 +158,7 @@ class AuthViewSet(ModelViewSet):
 
 
         #비밀번호 확인
-        password = request.data.get['password', None]
+        password = request.data.get('password', None)
         if password is None:
             return Response(
                 {
@@ -185,5 +190,8 @@ class AuthViewSet(ModelViewSet):
             )
         
         return Response(
+            {
+                "message": "비밀번호가 변경되었습니다."
+            },
             status = status.HTTP_200_OK
         )

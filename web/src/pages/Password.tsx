@@ -1,7 +1,10 @@
+// Components
+import PasswordForm from "../components/password-form/PasswordForm"
+
 const Password = () => {
     return (
         <div className="center">
-            <div>Password</div>
+            <PasswordForm />
         </div>
     )
 }

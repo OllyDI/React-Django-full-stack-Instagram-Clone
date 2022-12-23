@@ -12,4 +12,5 @@ RUN pip install -r requirements-dev.txt
 
 ENTRYPOINT [ "ash" ]
 
+ENV CHOKIDAR_USEPOLLING=true
 # 원래는 백엔드, 프론트엔드 두개의 컨테이너가 필요함

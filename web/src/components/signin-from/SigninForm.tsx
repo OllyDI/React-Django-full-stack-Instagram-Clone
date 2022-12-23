@@ -28,7 +28,7 @@ const SigninForm = () => {
         // 회원가입
         // axios.post('http://localhost:9998/users/signup') 
         // 로그인
-        axios.post('http://localhost:9998/users/signin', data)
+        axios.post('/users/signin', data)
             .then((resp)=>{
                 localStorage.setItem('userId', resp.data.pk);
                 nav('/', {replace: true});
