@@ -60,7 +60,7 @@ nav {
 }
 
 .logo {
-height  : 30px;
+    height  : 30px;
 }
 .nav-menu {
     position: relative;
@@ -86,7 +86,7 @@ height  : 30px;
     height: 145px;
     border-radius: 5px;
     box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
-    z-index: 1;
+    z-index: 1000;
     opacity: 1;
     padding: 0;
 }
@@ -102,7 +102,7 @@ height  : 30px;
     border-bottom: 8px solid white;
     content: '';
     display: block;
-    z-index: 2;
+    z-index: 1000;
     transition: all 200ms linear;
     box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
 }
@@ -130,10 +130,29 @@ nav-menu-item-list {
 .icon-label-container { 
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: #1b1a1a;
     padding: 14px;
 }
 
 .icon-label {
     padding-left: 8px;
     font-size: 15px;
+}
+
+.menu-background-show {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    opacity: 1;
+    z-index: 900;
+    width: 100vw;
+    height: 100vh;
+}
+
+.menu-background-hide {
+    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }

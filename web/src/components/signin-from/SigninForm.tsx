@@ -1,7 +1,7 @@
 // React module
 import { useState } from 'react';
 import { RegisterOptions, useForm } from 'react-hook-form';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // External modules
 import axios from 'axios';
@@ -21,7 +21,6 @@ const SigninForm = () => {
     const [ errorMsg, setErrorMsg ] = useState("");
 
     const { register, handleSubmit, formState: { isValid } } = useForm({ mode: 'onChange' })
-    const nav = useNavigate();
 
     const submit = (data: any) => {
         console.log(data);
@@ -31,7 +30,7 @@ const SigninForm = () => {
         axios.post('/users/signin', data)
             .then((resp)=>{
                 localStorage.setItem('userId', resp.data.pk);
-                nav('/', {replace: true});
+                window.location.replace('/');
             })
             .catch((error)=>{
                 console.log(error);

@@ -1,13 +1,16 @@
 // React modules
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 
+// Components
+import Header from './components/header/Header';
+
 // Pages
 import NotFound from './pages/NotFound';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Password from './pages/Password';
 import Home from './pages/Home';
-import User from './pages/User';
+import Setting from './pages/Setting';
 import Profile from './pages/Porfile';
 import Lab from './pages/Lab';
 
@@ -16,6 +19,7 @@ import Lab from './pages/Lab';
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes> 
         <Route path="/" element={<Home/>}></Route>
           
@@ -23,8 +27,8 @@ function App() {
         <Route path="/signin" element={<Signin/>}></Route>
         <Route path="/password" element={<Password/>}></Route>
         <Route path="/home" element={<Home/>}></Route>
-        <Route path="/user" element={<User/>}></Route>
-        <Route path="/profile" element={<Profile/>}></Route>
+        <Route path="/Setting" element={<Setting/>}></Route>
+        <Route path="/:username" element={<Profile/>}></Route>
         <Route path="/lab" element={<Lab/>}></Route>
         <Route path="*" element={<NotFound/>}></Route>
       </Routes>

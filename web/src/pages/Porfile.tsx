@@ -1,7 +1,12 @@
+// React modules
+import { useParams } from 'react-router-dom';
+
 const Profile = () => {
+    const { username } = useParams();
+
     return (
         <div className="center">
-            <div>Profile</div>
+            <div>{username}</div>
         </div>
     )
 }

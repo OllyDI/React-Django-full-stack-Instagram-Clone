@@ -1,7 +1,6 @@
 // React modules
 import { useState } from 'react';
 import { useForm, RegisterOptions } from 'react-hook-form';
-import { useNavigate, Link } from 'react-router-dom';
 
 // External modules
 // 비동기 요청을 위한 모듈
@@ -26,7 +25,6 @@ const SignupForm = () => {
     // 검증 후 isValid 값 변경
     // handleSubmit(성공, 실패) : 요청을 보내기위해 사용, 모든 옵션 만족시 성공 실행, 불만족시 실패 실행
     const { register, handleSubmit, formState: { isValid } } = useForm( { mode: 'onChange' } );
-    const nav = useNavigate();
 
     const submit = (data: any) => {
         console.log(data);
@@ -34,7 +32,7 @@ const SignupForm = () => {
             .then((resp)=>{
                 console.log(resp);
                 localStorage.setItem("userId", resp.data.pk);
-                nav("/", {replace: true});
+                window.location.replace("/");
             })
             .catch((error)=>{
                 console.log(error);
