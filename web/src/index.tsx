@@ -2,9 +2,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import thunkMiddleware from 'redux-thunk';
 
 // External modules
 import axios from 'axios';
+
+// Reducers
+import UserReducer from './reducers/UserReducer';
 
 // Components
 import App from './App';
@@ -20,12 +26,23 @@ axios.defaults.withCredentials = true;
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
+// Store 생성 : 각각의 리듀서를 하나로 합쳐줌
+const store = configureStore({
+  reducer: {
+    user: UserReducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
+  devTools: true
+});
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>
 );
 

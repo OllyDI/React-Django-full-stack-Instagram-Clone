@@ -94,3 +94,22 @@ class User(AbstractUser):
         # 패스워드 암호화하여 저장 -> 메소드는 AbstractUser모델에 존재함
         self.set_password(password)
         self.save()
+
+    def change_password(self, password, new_password):
+        # password x -> db
+        # password 암호와 -> db
+        if self.check_password(password): 
+            self.set_password(new_password)
+            self.save
+        else : raise ValidationError("비밀번호 변경에 실패했습니다.")
+    
+    def upload_profile(self, profile_image):
+        if 'image' not in profile_image.content_type:
+            return ValidationError("이미지 파일이 아닙니다. 이미지 파일을 업로드 해주세요.")
+        
+        ext = profile_image.content_type.split("/")[-1]
+        self.porfile.save(f"profiles/{self.pk}/profile-{int(time.time())}.{ext}")
+        return self
+
+    def delete_profile(self):
+        pass

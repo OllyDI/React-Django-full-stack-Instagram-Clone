@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # models
 from users.models import User
@@ -195,3 +195,82 @@ class AuthViewSet(ModelViewSet):
             },
             status = status.HTTP_200_OK
         )
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [ IsAuthenticated ]
+
+    def change_password(self, request, pk):
+        password = request.data.get('password', None)
+        if password is None: 
+            return Response (
+                {
+                    "message": "비밀번호를 입력해주세요."
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+
+        new_password = request.data.get('new_password', None)
+        if new_password is None: 
+            return Response (
+                {
+                    "message": "비밀번호를 입력해주세요."
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+        
+        # print(self.get.object)
+        try: user = self.get_object()
+        except Exception as e:
+            return Response (
+                {
+                    "message" : str(e)
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+        
+        try: user.change_password(password, new_password)
+        except Exception as e:
+            return Response (
+                {
+                    "message": str(e)
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+        print(user)
+        return Response ( status = status.HTTP_200_OK )
+
+    def upload_profile(self, request, pk):
+        print(request.FILES)
+        profile_image = request.FILES.get('file')
+        if profile_image is None:
+            return Response (
+                {
+                    "message": "파일이 없습니다. 파일을 전송해주세요."
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+        
+        try: 
+            user = self.get_object()
+            ueser = user.upload.profile(profile_image)
+        except Exception as e:
+            return Response (
+                {
+                    "message": str(e)
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+        return Response (
+            self.get_serializer(user).data,
+            status = status.HTTP_200_OK
+        )
+        
+
+        # print(profile_image)
+        # print(type(profile_image))
+        # print(profile_image.content_type)
+
+    def delete_profile(self, request, pk):
+        pass
