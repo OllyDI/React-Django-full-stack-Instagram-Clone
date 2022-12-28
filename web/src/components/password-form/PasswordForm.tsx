@@ -6,9 +6,6 @@ import { useForm, RegisterOptions } from 'react-hook-form';
 // External modeuls
 import axios from 'axios';
 
-// Assets
-import LockIcon from '../../icons/lock.svg';
-
 const PasswordForm = () => {
     const emailOpts: RegisterOptions = {
         required: true,
@@ -116,7 +113,7 @@ const PasswordForm = () => {
 
     return (
         <form className="password-form">
-            <img className="form-content-icon" src={LockIcon} alt="lock.svg" />
+            <img className="form-content-icon" src="assets/icons/lock.svg" alt="lock.svg" />
             <div className="form-content-title">로그인에 문제가 있나요?</div>
             <div className="form-content-subtitle">이메일 주소, 전화번호 또는 사용자 이름을 입력하시면 계정에 다시 액세스할 수 있는 링크를 보내드립니다.</div>
             {

@@ -100,7 +100,7 @@ class User(AbstractUser):
         # password 암호와 -> db
         if self.check_password(password): 
             self.set_password(new_password)
-            self.save
+            self.save()
         else : raise ValidationError("비밀번호 변경에 실패했습니다.")
     
     def upload_profile(self, profile_image):
@@ -108,8 +108,12 @@ class User(AbstractUser):
             return ValidationError("이미지 파일이 아닙니다. 이미지 파일을 업로드 해주세요.")
         
         ext = profile_image.content_type.split("/")[-1]
-        self.porfile.save(f"profiles/{self.pk}/profile-{int(time.time())}.{ext}")
+        self.profile.save(f"profiles/{self.pk}/profile-{int(time.time())}.{ext}", profile_image)
+        
         return self
 
     def delete_profile(self):
-        pass
+        self.profile = None
+        self.save()
+        
+        return self

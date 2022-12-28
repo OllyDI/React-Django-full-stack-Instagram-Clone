@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+# Permissions
+from users.permissions import IsUserOwner
+
 # models
 from users.models import User
 
@@ -199,7 +202,7 @@ class AuthViewSet(ModelViewSet):
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [ IsAuthenticated ]
+    permission_classes = [ IsAuthenticated, IsUserOwner ]
 
     def change_password(self, request, pk):
         password = request.data.get('password', None)
@@ -238,12 +241,12 @@ class UserViewSet(ModelViewSet):
                 },
                 status = status.HTTP_400_BAD_REQUEST
             )
-        print(user)
+
         return Response ( status = status.HTTP_200_OK )
 
     def upload_profile(self, request, pk):
         print(request.FILES)
-        profile_image = request.FILES.get('file')
+        profile_image = request.FILES.get('file', None)
         if profile_image is None:
             return Response (
                 {
@@ -253,8 +256,13 @@ class UserViewSet(ModelViewSet):
             )
         
         try: 
+            # request.user : 어드민 사용 불가
+            # User.objects.get(pk=pk) : 퍼미션 체크가 안됨
+            
+            # get_object를 사용하는 이유
+            # 권한 설정 및 특정 기능들이 이미 구현되어 있음
             user = self.get_object()
-            ueser = user.upload.profile(profile_image)
+            user.upload_profile(profile_image)
         except Exception as e:
             return Response (
                 {
@@ -273,4 +281,18 @@ class UserViewSet(ModelViewSet):
         # print(profile_image.content_type)
 
     def delete_profile(self, request, pk):
-        pass
+        try:
+            user = self.get_object()
+            user = user.delete_profile()
+        except Exception as e:
+            return Response (
+                {
+                    "message": str(e)
+                },
+                status = status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response (
+            self.get_serializer(user).data,
+            status = status.HTTP_200_OK
+        )

@@ -1,5 +1,10 @@
 // React modules
+import { useEffect } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+// Services
+import { UserService } from './serivces/UserService';
 
 // Components
 import Header from './components/header/Header';
@@ -11,12 +16,22 @@ import Signin from './pages/Signin';
 import Password from './pages/Password';
 import Home from './pages/Home';
 import Setting from './pages/Setting';
-import Profile from './pages/Porfile';
+import Profile from './pages/Profile';
 import Lab from './pages/Lab';
 
 
 // Routes로 묶는 이유 -> 경로 최적화
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+
+    if (userId) dispatch<any>(UserService.retrieve(userId));
+    // else {
+    //   nav('/signin');
+    // }
+  }, [])
+
   return (
     <BrowserRouter>
       <Header />

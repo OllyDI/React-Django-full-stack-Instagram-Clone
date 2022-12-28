@@ -1,13 +1,16 @@
 // React modules
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useForm, RegisterOptions } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 
 // Services
 import { UserService } from '../../serivces/UserService';
 
-// State
+// Models
 import { UserState } from '../../models/user';
+
+// Actions
+import { UpdateUser } from '../../reducers/UserReducer';
 
 // Styles
 import './SettingForm.css';
@@ -23,16 +26,10 @@ const SettingForm = () => {
 
     const [ errorMsg, setErrorMsg ] = useState("");
     const [ modal, setModal ] = useState(" profile-modal-hide");
-    const user = useSelector((state: {user: UserState}) => state.user.user);
+    const user = useSelector((state: {UserState: UserState}) => state.UserState.user);
     const { register, getValues, setValue, reset, formState: { errors } } = useForm({mode: 'onChange'});
     const dispatch = useDispatch();
     const fileInput:any = useRef(null);
-
-    useEffect(()=> {
-        let userId = localStorage.getItem('userId');
-        console.log(userId)
-        dispatch<any>(UserService.retrieve(userId));
-    }, []);
 
     const handleInput = () => {
         const [ username, description ] = getValues(['username', 'description']);
@@ -52,7 +49,10 @@ const SettingForm = () => {
         setValue('new_password', new_password, {shouldValidate: true, shouldDirty: true})
         setValue('new_password_check', new_password_check, {shouldValidate: true, shouldDirty: true})
 
-        if (errors.password === undefined && errors.new_password === undefined && errors.new_password_check === undefined) {
+        if (errors.password === undefined && 
+            errors.new_password === undefined && 
+            errors.new_password_check === undefined) 
+        {
             if (new_password === new_password_check) {
                 let userData: any = { password, new_password }
                 axios.put(`/users/${user.pk}/password`, userData)
@@ -76,16 +76,10 @@ const SettingForm = () => {
             setModal(" profile-modal-hide")
         }
     }
-    const hideModal2 = () => {
-        setModal(" profile-modal-hide")
-    }
-    const showModal = () => {
-        setModal(" profile-modal-show")
-    }
+    const hideModal2 = () => { setModal(" profile-modal-hide"); }
+    const showModal = () => { setModal(" profile-modal-show"); }
 
-    const openFileSelector = () => {
-        fileInput.current.click();
-    }
+    const openFileSelector = () => { fileInput.current.click(); }
 
     const uploadFile = (event: any) => {
         console.log(event);
@@ -97,6 +91,8 @@ const SettingForm = () => {
             axios.put(`users/${user.pk}/profile`, formData)
                 .then((resp) => {
                     console.log(resp);
+                    dispatch<any>(UpdateUser(resp.data));
+                    hideModal2();
                 })
                 .catch((error) => {
                     let e = "";
@@ -107,6 +103,14 @@ const SettingForm = () => {
                     setErrorMsg(e);
                 })
         }
+    }
+
+    const deleteFile = () => {
+        axios.delete(`users/${user.pk}/profile`)
+            .then((resp)=> {
+                dispatch<any>(UpdateUser(resp.data));
+                hideModal2();
+            })
     }
 
     return (
@@ -122,19 +126,19 @@ const SettingForm = () => {
                 <div className="profile-input-container">
                     <div className="profile-input-label">이메일</div>
                     <div className="profile-input-data">
-                        <input className="porfile-input" type="text" placeholder="이메일" defaultValue={user.email} disabled />
+                        <input className="profile-input" type="text" placeholder="이메일" defaultValue={user.email} disabled />
                     </div>
                 </div>
                 <div className="profile-input-container">
                     <div className="profile-input-label">사용자 이름</div>
                     <div className="profile-input-data">
-                        <input className="porfile-input" type="text" placeholder="사용자 이름" defaultValue={user.username} {...register("username", usernameOpts)} />
+                        <input className="profile-input" type="text" placeholder="사용자 이름" defaultValue={user.username} {...register("username", usernameOpts)} />
                     </div>
                 </div>
                 <div className="profile-input-container">
                     <div className="profile-input-label">소개</div>
                     <div className="profile-input-data">
-                        <textarea className="porfile-input profile-textarea" placeholder="소개" defaultValue={user.description} {...register("description")} />
+                        <textarea className="profile-input profile-textarea" placeholder="소개" defaultValue={user.description} {...register("description")} />
                     </div>
                 </div>
                 <div className="profile-input-container">
@@ -146,25 +150,25 @@ const SettingForm = () => {
                 <div className="profile-input-container">
                     <div className="profile-input-label">이전 비밀번호</div>
                     <div className="profile-input-data">
-                        <input className="porfile-input" type="password" {...register("password", passwordOpts)} />
+                        <input className="profile-input" type="password" {...register("password", passwordOpts)} />
                     </div>
                 </div>
                 <div className="profile-input-container">
                     <div className="profile-input-label">새 비밀번호</div>
                     <div className="profile-input-data">
-                        <input className="porfile-input" type="password" {...register("new_password", passwordOpts)} />
+                        <input className="profile-input" type="password" {...register("new_password", passwordOpts)} />
                     </div>
                 </div>
                 <div className="profile-input-container">
                     <div className="profile-input-label"></div>
                     <div className="profile-input-data">
-                        <input className="porfile-input" ref={fileInput} hidden type="file" onChange={uploadFile} accept="image/*" />
+                        <input className="profile-input" ref={fileInput} hidden type="file" onChange={uploadFile} accept="image/*" />
                     </div>
                 </div>
                 <div className="profile-input-container">
                     <div className="profile-input-label">새 비밀번호 확인</div>
                     <div className="profile-input-data">
-                        <input className="porfile-input" type="password" {...register("new_password_check", passwordOpts)} />
+                        <input className="profile-input" type="password" {...register("new_password_check", passwordOpts)} />
                     </div>
                 </div>
                 <div className="profile-input-container">
@@ -188,7 +192,7 @@ const SettingForm = () => {
                             <div className="profile-modal-button profile-modal-button-blue" onClick={openFileSelector}>
                                 <div>사진 업로드</div>
                             </div>
-                            <div className="profile-modal-button profile-modal-button-red">
+                            <div className="profile-modal-button profile-modal-button-red" onClick={deleteFile}>
                                 <div>현재 사진 삭제</div>
                             </div>
                             <div className="profile-modal-bottom-button" onClick={hideModal2}>

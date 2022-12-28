@@ -3,7 +3,7 @@ export interface User {
     email?: string;
     username?: string;
     description?: string;
-    profile?: string|null;
+    profile?: any;
     updated: string;
 }
 
