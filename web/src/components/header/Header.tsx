@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+// Actions
+import { ShowCreateFeedFormModal } from '../../reducers/FeedReducer';
 
 // Models
 import { UserState } from '../../models/user';
@@ -15,6 +19,7 @@ const Header = () => {
     const [ cookies ] = useCookies();
     const user = useSelector((state: { UserState: UserState }) => state.UserState.user);
     const nav = useNavigate();
+    const dispatch = useDispatch();
 
     const showMenu = (event: any) => {
         if (event?.target.id !== "menu-background") {
@@ -63,7 +68,7 @@ const Header = () => {
                             <img src={window.location.pathname === "/" ? 'assets/icons/home-filled.svg' : 'assets/icons/home-outlined.svg'} alt="home.svg" />
                         </Link>
                     </span>
-                    <span className="nav-item">
+                    <span className="nav-item" onClick={()=>dispatch<any>(ShowCreateFeedFormModal())}>
                         <div>
                             <img src="assets/icons/add-outlined.svg" alt="addIcon.svg" />
                         </div>

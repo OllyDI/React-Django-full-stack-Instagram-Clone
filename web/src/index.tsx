@@ -11,6 +11,7 @@ import axios from 'axios';
 
 // Reducers
 import UserReducer from './reducers/UserReducer';
+import FeedReducer from './reducers/FeedReducer';
 
 // Components
 import App from './App';
@@ -29,7 +30,8 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 // Store 생성 : 각각의 리듀서를 하나로 합쳐줌
 const store = configureStore({
   reducer: {
-    UserState: UserReducer
+    UserState: UserReducer,
+    FeedState: FeedReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
   devTools: true

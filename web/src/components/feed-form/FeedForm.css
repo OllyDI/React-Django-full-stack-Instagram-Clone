@@ -1,0 +1,261 @@
+.feed-form-modal-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+
+    z-index: 50;
+}
+  
+.feed-form-modal-show {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-form-modal-hide {
+    width: 0;
+    height: 0;
+    
+    display: none;
+}
+  
+.image-selector-modal {
+    position: relative;
+    width: 480px;
+    height: 550px;
+    
+    display: flex;
+    flex-direction: column;
+    
+    background: white;
+    backdrop-filter: blur(13.5px);
+    -webkit-backdrop-filter: blur(13.5px);
+    
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.feed-form-detail-modal {
+    position: relative;
+  
+    display: flex;
+    flex-direction: column;
+    
+    background: white;
+    backdrop-filter: blur(13.5px);
+    -webkit-backdrop-filter: blur(13.5px);
+    
+    border-radius: 10px;
+}
+
+.modal-content-show {
+    display: flex;
+}
+
+.modal-content-hide {
+    display: none;
+}
+
+.feed-form-modal-title-container {
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid;
+}
+
+.feed-form-modal-content-container {
+    flex: 1;
+  
+    display: flex;
+    flex-direction: row;
+    
+    border-radius: 0 0 10px 10px;
+}
+  
+
+.feed-form-modal-title {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    font-weight: bold;
+    font-size: 20px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.feed-form-modal-title-side {
+    flex: 0 0 40px;
+    text-align: center;
+    margin: 0 10px;
+}
+  
+.feed-form-image-selector {
+    width: 100%;
+    height: 100%;
+    
+    text-align: center;
+}
+  
+.image-input {
+    z-index: 50;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    padding: auto;
+    margin: auto;
+    font-size: 24px;
+}
+  
+.image-input-default {
+    background-color: white;
+}
+  
+.image-input-drag {
+    background-color: gray;
+}
+  
+.image-input-btn {
+    width: 120px;
+    height: 30px;
+    margin: 20px auto;
+    border: solid 1px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    background-color: #0095f6;
+}
+  
+.image-input-icon {
+    font-size: 24px;
+    margin: 20px auto;
+}
+
+
+.image-input-text {
+    text-align: center;
+    font-size: 24px;
+}
+
+.feed-form-detail {
+    position: relative; 
+
+    display: flex;
+
+    border-radius: 0 0 10px 10px;
+    border: 0;
+}
+
+.feed-form-image-slider {
+  width: max-content;
+  height: 550px;
+}
+
+.slick-slider {
+    width: 480px;
+    height: max-content;
+}
+
+.slick-slide {
+    height: 550px;
+}
+
+.feed-form-slide-image {
+    width: 480px;
+    max-height: 550px;
+    object-fit: cover;
+
+    border-radius: 0 0 0 10px;
+}
+
+.feed-form-description {
+    width: 250px;
+    max-height: 550px;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-form-description-user {
+    width: 100%;
+    height: 45px;
+    
+    display: flex;
+    align-items: center;
+}
+
+.feed-form-description-profile {
+    flex: 0 0 40px;
+    margin: 15px 0px 10px 10px;
+}
+
+.feed-form-description-profile-image {
+    width: 24px;
+    height: 24px;
+    border-radius: 20px;
+}
+
+.modal-content-form-username {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+.feed-form-description-input-container {
+    width: 100%;
+    height: 50%;
+    text-align: center;
+}
+
+.feed-form-description-input {
+    height: 98%;
+    width: 90%;
+    resize: none;
+    
+    margin-top: 5px;
+    padding-left: 2px;
+    font-size: 15px;
+    border: none;
+}
+
+.feed-form-description-input {
+    outline: none;
+}
+
+.slick-prev {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    z-index: 51;
+}
+
+.slick-next {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    z-index: 51;
+}
+
+.slick-dots {
+    bottom: 5px;
+    z-index: 51;
+}
+
+.feed-form-description-error {
+    color: red;
+}

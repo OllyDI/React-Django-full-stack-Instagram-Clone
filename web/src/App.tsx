@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 // Services
 import { UserService } from './serivces/UserService';
+import FeedForm from './components/feed-form/FeedForm';
 
 // Components
 import Header from './components/header/Header';
@@ -47,6 +48,7 @@ function App() {
         <Route path="/lab" element={<Lab/>}></Route>
         <Route path="*" element={<NotFound/>}></Route>
       </Routes>
+      <FeedForm />
     </BrowserRouter>
   );
 }
