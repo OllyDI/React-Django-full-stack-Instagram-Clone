@@ -1,4 +1,4 @@
-import FeedList from "../feed-list/FeedList";
+import FeedList from "../components/feed-list/FeedList";
 
 const Home = () => {
     return (

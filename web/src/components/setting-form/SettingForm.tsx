@@ -4,7 +4,7 @@ import { useForm, RegisterOptions } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 
 // Services
-import { UserService } from '../../serivces/UserService';
+import { UserService } from '../../services/UserService';
 
 // Models
 import { UserState } from '../../models/user';

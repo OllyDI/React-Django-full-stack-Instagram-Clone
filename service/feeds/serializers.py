@@ -1,5 +1,6 @@
-# Python modules
+# python modules
 import os
+from re import M
 import uuid
 from datetime import date
 
@@ -10,22 +11,44 @@ from django.core.exceptions import ValidationError
 # DRF modules
 from rest_framework import serializers
 
-# Models
+# models
+from users.models import (
+    User
+)
+
 from feeds.models import (
     Feed,
     FeedImage
 )
 
-class FeedSerializer(serializers.ModelSerializer):
-    images = serializers.SerializerMethodField()
+class FeedUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'pk',
+            'username',
+            'profile'
+        ]
 
+class UserSerializer(serializers.ModelSerializer):
+    class Mete:
+        model = User
+        fields = [
+            'pk',
+            'username',
+            'profile'
+        ]
+
+class FeedSerializer(serializers.ModelSerializer):
+    user = FeedUserSerializer(read_only=True)
+    images = serializers.SerializerMethodField()
     class Meta:
         model = Feed
         fields = (
             'pk',
             'user',
             'images',
-            'desciptions',
+            'description',
             'like',
             'created',
             'updated'
@@ -33,42 +56,36 @@ class FeedSerializer(serializers.ModelSerializer):
 
     def get_images(self, feed):
         images = feed.feed_images.all()
-
-        return [self.content['request'].build_absolute_url(image.image) for image in images]
+        return [self.context['request'].build_absolute_uri(image.image.url) for image in images]
 
     def create(self, validated_data):
         today = date.today()
+        image_files = self.context['request'].FILES.getlist('images', None)
 
-        print(validated_data)
-        print(self.context['request'].FILES)
-        image_files = self.context['request'].FILES.get('images', None)
-        print(image_files)
-
-        if image_files is not None:
+        if image_files is None:
             raise ValidationError("이미지 파일이 없습니다.")
-
-        feed = Feed(**validated_data)
+        
+        feed = Feed.objects.create(**validated_data, user=self.context['request'].user)
 
         images = []
         for image_file in image_files:
             if 'image' not in image_file.content_type:
-                for image in images: 
-                    image.image.delete()
-                    image.delete()
-                raise ValidationError("이미지가 아닌 파일이 포함됐습니다. 이미지만 업로드 해주세요.")
+                for image in images:
+                    feed.delete()
+                raise ValidationError("이미지가 아닌 파일이 포함됐습니다. 이미지만 업로드해주세요.")
             ext = image_file.content_type.split('/')[-1]
 
-            while True: 
+            while True:
                 filename = f"{uuid.uuid4()}.{ext}"
-                file_dir = today.strftime("%Y%m/%d")
-                # /opt/instarclone/var/media/feeds/%Y/%m/%d/filename.ext
+                file_dir = today.strftime("%Y/%m/%d")
+                # /opt/instaclone/var/media/feeds/%Y/%m/%d/filename.ext
                 filepath = os.path.join(settings.MEDIA_ROOT, f"feeds/{file_dir}/{filename}")
-                if not os.path.exists(filepath): break
+                if not os.path.exists(filepath):
+                    break
             
-            image = FeedImage(feed = feed)
+            image = FeedImage(feed=feed)
             image.image.save(filename, image_file)
-            images.append(image)
             image.save()
-            
-        feed.save()
+            images.append(image)
+        
         return feed

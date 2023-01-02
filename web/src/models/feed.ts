@@ -10,8 +10,8 @@ export interface Feed {
     images?: string[];
     description?: string;
     like?: number;
-    created?: string;
     updated?: string;
+    created?: string;
 }
 
 export interface FeedList {
@@ -20,13 +20,12 @@ export interface FeedList {
 }
 
 export interface FeedState {
-    createFeedFormModal: boolean;
+    createFeedFormModal: boolean,
     error: any;
-    loading: boolean;
-    totalCount: number;
-    feeds: FeedList;
+    loading: boolean,
+    totalCount: number,
+    feeds: FeedList
 }
-
 
 export const InitFeedState = {
     createFeedFormModal: false,

@@ -7,7 +7,7 @@ import { User, InitUser } from '../models/user';
 import { UserState, InitUserState } from '../models/user';
 
 // Services
-import { UserService } from "../serivces/UserService";
+import { UserService } from "../services/UserService";
 
 export const UserSlice = createSlice({
     name: 'user',

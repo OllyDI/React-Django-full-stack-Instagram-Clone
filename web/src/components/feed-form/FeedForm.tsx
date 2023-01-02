@@ -18,7 +18,7 @@ import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import './FeedForm.css';
 import { HideCreateFeedFormModal } from '../../reducers/FeedReducer';
-import { FeedService } from '../../serivces/FeedService';
+import { FeedService } from '../../services/FeedService';
 
 const FeedForm = () => {
     const settings = {
@@ -53,6 +53,7 @@ const FeedForm = () => {
     const hideModal = (event: any) => {
         if (event.target.id === 'feed-form-modal') {
             dispatch(HideCreateFeedFormModal());
+            setFiles([]);
         }
     }
 

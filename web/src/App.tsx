@@ -4,7 +4,7 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // Services
-import { UserService } from './serivces/UserService';
+import { UserService } from './services/UserService';
 import FeedForm from './components/feed-form/FeedForm';
 
 // Components

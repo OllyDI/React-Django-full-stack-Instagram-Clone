@@ -1,12 +1,12 @@
-// React
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+// react
+import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
 
-// Models
-import {Feed, FeedState, InitFeedState } from '../models/feed';
+// models
+import { Feed, FeedState, InitFeedState } from '../models/feed';
 
-// Service
-import { FeedService } from "../serivces/FeedService";
+// Services
+import { FeedService } from '../services/FeedService';
 
 export const FeedSlice = createSlice({
     name: 'feed',
@@ -20,30 +20,34 @@ export const FeedSlice = createSlice({
         }
     },
     extraReducers: {
-        [FeedService.list.pending.type]: (state) => { state = {...InitFeedState, loading: true}; },
-        [FeedService.list.fulfilled.type]: (state, {payload}: PayloadAction<any>) => {
+        [FeedService.list.pending.type]: (state) => {
+            state = {...InitFeedState, loading: true};
+        },
+        [FeedService.list.fulfilled.type]: (state, {payload} : PayloadAction<any>) => {
             state.loading = false;
             state.totalCount = payload.totalCount;
             state.feeds.items = [...payload.items];
         },
-        [FeedService.list.rejected.type]: (state, {payload}: PayloadAction<any>) => {
+        [FeedService.list.rejected.type]: (state, {payload} : PayloadAction<any>) => {
             state.loading = false;
             state.error = payload;
         },
-        [FeedService.create.pending.type]: (state) => { state = {...InitFeedState, loading: true}; },
-        [FeedService.create.fulfilled.type]: (state, {payload}: PayloadAction<any>) => {
+        [FeedService.create.pending.type]: (state) => {
+            state = {...InitFeedState, loading: true};
+        },
+        [FeedService.create.fulfilled.type]: (state, {payload} : PayloadAction<any>) => {
             state.loading = false;
         },
-        [FeedService.create.rejected.type]: (state, {payload}: PayloadAction<any>) => {
+        [FeedService.create.rejected.type]: (state, {payload} : PayloadAction<any>) => {
             state.loading = false;
             state.error = payload;
         },
     }
-})
+});
 
 export const {
     ShowCreateFeedFormModal,
     HideCreateFeedFormModal
-} = FeedSlice.actions
+} = FeedSlice.actions;
 
 export default FeedSlice.reducer;

@@ -15,9 +15,7 @@ const Setting = () => {
     }, [])
 
     return (
-        <div className="center">
-            <SettingForm />
-        </div>
+        <SettingForm />
     )
 }
 
